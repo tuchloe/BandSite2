@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>The Bees Knees - Biography</title>
-    <link rel="stylesheet" type="text/css" href="./styles/bio copy.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/bio.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
+<body>
 <header>
     <div id="Menu">
         <nav class="NavHostBar">
             <div>
                 <a href="./index.html">
-                    <img id="HeaderLogo" src="./assets/Logo/Logo-bandsite.svg" />
+                    <img id="HeaderLogo" src="./assets/Logo/Logo-bandsite.svg" href="../index.html" />
                 </a>
             </div>
             <div id="NavContent">
@@ -22,14 +21,13 @@
                         <a class="navbar__navitem" href="./index.html">Biography</a>
                     </li>
                     <li  class="NavItem">
-                        <a class="navbar__navitem" href="">Shows</a>
+                        <a class="navbar__navitem" href="./pages/shows.html">Shows</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </div>
 </header>
-
 <div>
     <h1 id="PageTitle">The Bees Knees</h1>
     <div id="ImageWrapper">
@@ -37,7 +35,6 @@
         <img id="BiographyMainLanding" src="./assets/Images/hero-bio.jpg">
     </div>
 </div>
-
 <div id="AboutMusiciansHeader">
     <h2>About the Musicians</h2>
 </div>
@@ -77,8 +74,6 @@
         </div>
     </div>
 </div>
-
-
 <div id="GalleryContainer">
     <h2 id="GalleryTitle">Photo Gallery</h2>
     <div id="Gallery">
@@ -111,18 +106,14 @@
         </div>
     </div>
 </div>
-
 <div id="CommentSection">
     <h2 id="CommentTitle">Join the Conversation</h2>
     <input type="text" id="nameInput" placeholder="Enter your name" /><br><br>
     <textarea id="commentInput" placeholder="Add a new comment" rows="4" cols="50"></textarea><br><br>
     <button id="addCommentBtn">Add Comment</button>
-    <div id="comments">
-        <h2>Comments</h2>
-    </div>
+    <div id="comments"></div>
     <script src="./scripts/index.js"></script>
 </div>
-
 <footer>
     <div id="FooterOverallContainer">
         <div id="FooterLeft">
@@ -167,3 +158,4 @@
     </div>
     <div id="copyright">Copyright The Bees Knees © 2023 All Rights Reserved</div>
 </footer>
+</body>
