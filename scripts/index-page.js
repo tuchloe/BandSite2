@@ -1,45 +1,56 @@
-const preloadedComments = [
-            { name: 'Irena', text: 'Their music videos are truly iconic' },
-            { name: 'Polly', text: 'When will they be coming to Toronto?' },
-            { name: 'Jess', text: 'I love this band!' }
-        ];
-        const commentsSection = document.getElementById('comments');
-        function displayComment(name, text) {
-            const newComment = document.createElement('div');
-            newComment.classList.add('comment');
+const api = new BandSiteApi('0e2a70e0-7036-4aea-a5e1-ff0bc540dee5');
+const commentsSection = document.getElementById('comments');
 
-            const nameDiv = document.createElement('div');
-            nameDiv.classList.add('name');
-            nameDiv.textContent = name;
+function displayComment(name, text) {
+    const newComment = document.createElement('div');
+    newComment.classList.add('comment');
 
-            const textDiv = document.createElement('div');
-            textDiv.classList.add('text');
-            textDiv.textContent = text;
+    const nameDiv = document.createElement('div');
+    nameDiv.classList.add('name');
+    nameDiv.textContent = name;
 
-            newComment.appendChild(nameDiv);
-            newComment.appendChild(textDiv);
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('text');
+    textDiv.textContent = text;
 
-            commentsSection.insertBefore(newComment, commentsSection.firstChild);
+    newComment.appendChild(nameDiv);
+    newComment.appendChild(textDiv);
+
+    commentsSection.insertBefore(newComment, commentsSection.firstChild);
+}
+
+async function loadComments() {
+    try {
+        const comments = await api.getComments();
+        const recentComments = comments.slice(0, 3);
+        recentComments.forEach(comment => displayComment(comment.name, comment.comment));
+    } catch (error) {
+        console.error('Error loading comments:', error);
+    }
+}
+
+const addCommentBtn = document.getElementById('addCommentBtn');
+const nameInput = document.getElementById('nameInput');
+const commentInput = document.getElementById('commentInput');
+
+addCommentBtn.addEventListener('click', async function () {
+    const nameText = nameInput.value;
+    const commentText = commentInput.value;
+
+    if (nameText.trim() !== "" && commentText.trim() !== "") {
+        try {
+            await api.postComment({ name: nameText, comment: commentText });
+            displayComment(nameText, commentText);
+            nameInput.value = '';
+            commentInput.value = '';
+        } catch (error) {
+            console.error('Error posting comment:', error);
         }
-        window.onload = function() {
-            const recentComments = preloadedComments.slice(-3); // Get the last 3 comments
-            recentComments.forEach(comment => {
-                displayComment(comment.name, comment.text);
-            });
-        };
-        const addCommentBtn = document.getElementById('addCommentBtn');
-        const nameInput = document.getElementById('nameInput');
-        const commentInput = document.getElementById('commentInput');
+    } else {
+        alert("Please enter both a name and a comment.");
+    }
+});
 
-        addCommentBtn.addEventListener('click', function() {
-            const nameText = nameInput.value;
-            const commentText = commentInput.value;
-
-            if (nameText.trim() !== "" && commentText.trim() !== "") {
-                displayComment(nameText, commentText);
-                nameInput.value = '';
-                commentInput.value = '';
-            } else {
-                alert("Please enter both a name and a comment.");
-            }
-        });
+window.onload = function () {
+    loadComments();
+};

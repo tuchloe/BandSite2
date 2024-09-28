@@ -1,44 +1,11 @@
-const concerts = [
-    {
-      date: "March 25, 2024",
-      venue: "Madison Square Garden",
-      city: "New York",
-      country: "USA"
-    },
-    {
-      date: "April 2, 2024",
-      venue: "The O2 Arena",
-      city: "London",
-      country: "UK"
-    },
-    {
-      date: "April 15, 2024",
-      venue: "Accor Arena",
-      city: "Paris",
-      country: "France"
-    },
-    {
-      date: "April 28, 2024",
-      venue: "Olympic Stadium",
-      city: "Berlin",
-      country: "Germany"
-    },
-    {
-      date: "May 5, 2024",
-      venue: "Sydney Opera House",
-      city: "Sydney",
-      country: "Australia"
-    }
-  ];
-  
-
 const concertsContainer = document.getElementById('concerts-container');
+const api = new BandSiteApi(API_KEY); 
 
 function renderConcertTable(concerts) {
+  concertsContainer.innerHTML = '';
   const table = document.createElement('table');
   table.classList.add('concert-table');
 
-  
   const headerRow = document.createElement('tr');
   const headers = ['Date', 'Venue', 'Location', ' '];
   headers.forEach(headerText => {
@@ -80,14 +47,21 @@ function renderConcertTable(concerts) {
 function handleConcertClick(selectedRow) {
   const allRows = document.querySelectorAll('.concert-table tr');
   allRows.forEach(row => row.classList.remove('selected'));
-
   selectedRow.classList.add('selected');
 }
 
-renderConcertTable(concerts);
+async function loadConcerts() {
+  try {
+    const concerts = await api.getShows();
+    renderConcertTable(concerts);
+  } catch (error) {
+    console.error('Error loading concerts:', error);
+  }
+}
 
-
-
+window.onload = function() {
+  loadConcerts();
+};
 
 
 
